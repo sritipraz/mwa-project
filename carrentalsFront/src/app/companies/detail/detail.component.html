@@ -1,0 +1,66 @@
+<div class="mx-auto my-6">
+    <app-loader [showLoader]="loading.company"></app-loader>
+    <!-- Jumbotron -->
+    <div *ngIf="!loading.company" class="p-6 shadow-lg rounded-lg bg-gray-100 text-gray-700">
+        <h2 class="font-semibold text-3xl mb-2">{{company.name | titlecase}}</h2>
+        <hr>
+        <p class="py-2">
+            {{company.description}}
+        </p>
+        <div class="grid grid-flow-row-dense grid-cols-3 grid-rows-3 divide-x">
+            <div class="col-span-2">
+                <h5 class="font-semibold text-1xl mb-2">Contact</h5>
+                <p>
+                    <span>Email: {{company.email}}</span> <br>
+                    <span>Phone: {{company.phone}}</span> <br>
+                    <span *ngIf="company.website">Website: {{company.website}}</span> <br>
+                </p>
+            </div>
+            <div class="pl-4">
+                <h5 class="font-semibold text-1xl mb-2">Address</h5>
+                <p>
+                    <span>{{company.address.city}}</span>
+                    <br>
+                    <span>{{company.address.state}}, {{company.address.zip}}</span>
+              </p></div>
+          </div>
+      </div>
+      <!-- Jumbotron -->
+      
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6 ">
+        <div class="flex item-center justify-between mb-2 px-5">
+            <div>
+                <select id="countries" (change)="filterType($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option [value]="'all'" selected>Filter by Vehicle Type</option>
+                <option *ngFor="let type of vehicleTypes" [value]="type">{{type | titlecase}}</option>
+                </select>
+            </div>
+        </div>
+        <app-loader [showLoader]="loading.vehicles"></app-loader>
+
+        <h6 *ngIf="!loading.vehicles && vehicleList.length === 0" class="text-lg py-3 text-center dark:text-white text-gray-700 dark:text-gray-400">No results available !! </h6>
+
+        <div *ngIf="!loading.vehicles && vehicleList.length > 0" class="my-6">
+            <div class="grid gap-8 mb-6 lg:mb-16 md:grid-cols-3">
+                <div class="grid grid-col-1 bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700" *ngFor="let vehicle of vehicleList">
+                    <div class="place-content-center">
+                        <img class="rounded-t-lg" [src]="vehicle.images?.[0]" alt="No image available" />
+                    </div>
+                    
+                    <div class="p-5">
+                        <a href="javascript:void(0)">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-700  dark:text-white">{{vehicle.maker | titlecase}} - {{vehicle.make}} ({{vehicle.type | titlecase}})</h5>
+                        </a>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{vehicle.description}}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{vehicle.model}}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{vehicle.seaters}} Seaters</p>
+                        <a [routerLink]="['', 'companies', company._id, 'vehicles', vehicle._id]" class="inline-flex items-center font-medium text-gray-600 dark:text-gray-500 hover:underline">
+                            <small>View Details</small>
+                            <svg aria-hidden="true" class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </div>
+    </div>

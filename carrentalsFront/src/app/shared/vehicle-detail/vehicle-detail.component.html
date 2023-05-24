@@ -1,0 +1,62 @@
+<div class="flex justify-end" *ngIf="!user.isAdmin">
+    <button type="button" (click)="routeToBooking()"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Request
+        For Booking
+    </button>
+</div>
+<app-loader [showLoader]="loading"></app-loader>
+<div *ngIf="!loading"
+    class="grid grid-cols-2 gap-4 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-2xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div class="flex flex-col justify-between p-4 leading-normal">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{vehicle.maker | titlecase}} -
+            {{vehicle.make}} </h5>
+        <p>{{vehicle.description}}</p>
+        <ul class="my-8 space-y-4 text-left text-gray-500 dark:text-gray-400 ">
+            <p class="font-semibold text-gray-500 dark:text-gray-400 underline">Details</p>
+            <li class="flex items-center space-x-3">
+                <!-- Icon -->
+                <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span>{{vehicle.type}}</span>
+            </li>
+            <li class="flex items-center space-x-3">
+                <!-- Icon -->
+                <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span>{{vehicle.model}}</span>
+            </li>
+            <li class="flex items-center space-x-3">
+                <!-- Icon -->
+                <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span>{{vehicle.seaters}} Seaters</span>
+            </li>
+            <p class="font-semibold text-gray-500 dark:text-gray-400 underline" *ngIf="vehicle.features.length > 0">
+                Features</p>
+            <li class="flex items-center space-x-3" *ngFor="let fetaure of vehicle.features">
+                <!-- Icon -->
+                <svg *ngIf="fetaure" class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400"
+                    fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <span>{{fetaure}}</span>
+            </li>
+        </ul>
+    </div>
+    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg"
+        [src]="imagePath" alt="No vehicle image available">
+</div>

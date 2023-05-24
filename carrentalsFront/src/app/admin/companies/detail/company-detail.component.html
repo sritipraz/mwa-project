@@ -1,0 +1,112 @@
+<div class="mx-auto my-6">
+    <app-loader [showLoader]="loading.company"></app-loader>
+<!-- Jumbotron -->
+<div *ngIf="!loading.company" class="p-6 shadow-lg rounded-lg bg-gray-100 text-gray-700">
+    <h2 class="font-semibold text-3xl mb-2">{{company.name | titlecase}}</h2>
+        <hr>
+        <p class="py-2">
+            {{company.description}}
+        </p>
+        <br>
+    <div class="grid grid-flow-row-dense grid-cols-3 grid-rows-3 divide-x">
+        <div class="col-span-2">
+            <h5 class="font-semibold text-1xl mb-2">Contact</h5>
+            <p>
+                <span>Email: {{company.email}}</span> <br>
+                <span>Phone: {{company.phone}}</span> <br>
+                <span *ngIf="company.website">Website: {{company.website}}</span> <br>
+            </p>
+        </div>
+        <div class="pl-4">
+            <h5 class="font-semibold text-1xl mb-2">Address</h5>
+            <p>
+                <span>{{company.address.city}}</span>
+                <br>
+                <span>{{company.address.state}}, {{company.address.zip}}</span>
+          </p></div>
+      </div>
+  </div>
+  <!-- Jumbotron -->
+  
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-6 ">
+    <div class="flex item-center justify-between mb-2 px-5">
+        <div>
+            <select id="countries" (change)="filterType($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option [value]="'all'" selected>Filter by Vehicle Type</option>
+            <option *ngFor="let type of vehicleTypes" [value]="type">{{type | titlecase}}</option>
+            </select>
+        </div>
+
+        <div>
+            <a [routerLink]="['', 'admin','companies',company._id, 'vehicles', 'add']">
+                <button type="button"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add
+                    Vehicle</button>
+            </a>
+        </div>
+    </div>
+    <app-loader [showLoader]="loading.vehicles"></app-loader>
+
+    <table *ngIf="!loading.vehicles" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Vehicle Type
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Maker
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Make
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Model
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Seaters
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <h6 *ngIf="vehicleList.length === 0" class="text-lg py-3 text-center dark:text-white text-gray-700 dark:text-gray-400">No results available !! </h6>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" *ngFor="let vehicle of vehicleList">
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{vehicle.type}}
+                </td>
+                <td class="px-6 py-4">
+                    {{vehicle.maker}}
+                </td>
+                <td class="px-6 py-4">
+                    {{vehicle.make}}
+                </td>
+                <td class="px-6 py-4">
+                    {{vehicle.model}}
+                </td>
+                <td class="px-6 py-4">
+                    {{vehicle.seaters}}
+                </td>
+                <td class="px-6 py-4 flex space-x-4 sm:mt-0">
+                    <a [routerLink]="['', 'admin','companies', company._id, 'vehicles', vehicle._id ]" class="font-medium text-gray-600 dark:text-blue-500 hover:underline">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+                        </svg>
+                    </a> 
+                    <a [routerLink]="['', 'admin','companies', company._id, 'vehicles', vehicle._id , 'edit']"  class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
+                        </svg>
+                    </a> 
+                    <a href="javascript:void(0)" (click)="removeVehicle(vehicle._id)" class="font-medium text-red-600 dark:text-blue-500 hover:underline" >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>

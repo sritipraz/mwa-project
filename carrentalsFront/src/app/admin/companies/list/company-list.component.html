@@ -1,0 +1,87 @@
+<div class="mx-auto my-6">
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="flex item-center justify-between">
+        <div class="pb-4 bg-white dark:bg-gray-900 px-5">
+            <label for="table-search" class="sr-only">Search</label>
+            <div class="relative mt-1">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                </div>
+                <input type="text" [(ngModel)]="name" (keyup.enter)="searchCompany()" id="table-search"
+                    class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search">
+                    <button type="button" (click)="clearFilter()"
+                        class="absolute top-0 right-0 p-1.5 text-sm font-medium text-gray-400 border-0 border-white ring-0 focus:border-0">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"></path>
+                        </svg>
+                        <span class="sr-only">Search</span>
+                    </button>
+            </div>
+        </div>
+        <div>
+            <a [routerLink]="['', 'admin','companies', 'add']">
+                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>
+            </a>
+        </div>
+    </div>
+    <app-loader [showLoader]="loading"></app-loader>
+    <h6 *ngIf="!loading && companyList.length === 0" class="text-lg py-3 text-center dark:text-white text-gray-700 dark:text-gray-400">No results available !! </h6>
+    <table *ngIf="!loading && companyList.length > 0" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Company name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Phone
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Address
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" *ngFor="let company of companyList">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{company.name}}
+                </th>
+                <td class="px-6 py-4">
+                    {{company.email}}
+                </td>
+                <td class="px-6 py-4">
+                    {{company.phone}}
+                </td>
+                <td class="px-6 py-4">
+                    {{company?.address?.city}} {{company?.address?.state}}, {{company?.address?.zip}}
+                </td>
+                <td class="px-6 py-4 flex space-x-4 sm:mt-0">
+                    <a [routerLink]="['', 'admin','companies', company._id]" class="font-medium text-gray-600 dark:text-blue-500 hover:underline">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"></path>
+                        </svg>
+                    </a> 
+                    <a [routerLink]="['', 'admin','companies', company._id, 'edit']" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"></path>
+                        </svg>
+                    </a> 
+                    <a href="javascript:void(0)" (click)="removeCompany(company._id)" class="font-medium text-red-600 dark:text-blue-500 hover:underline">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>

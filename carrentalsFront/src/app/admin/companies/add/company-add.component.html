@@ -1,0 +1,145 @@
+<div class="w-full lg:w-8/12 px-4 mx-auto mt-6">
+    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
+        <div class="rounded-t bg-white mb-0 px-6 py-6">
+            <div class="text-center flex justify-between">
+                <h6 class="text-blueGray-700 text-xl font-bold">
+                    Add Company
+                </h6>
+            </div>
+        </div>
+        <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+            <form [formGroup]="companyForm" (ngSubmit)="addCompany()">
+                <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                    Company Information
+                </h6>
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="name">
+                                Company Name
+                            </label>
+                            <input type="text" formControlName="name"
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                    </div>
+                    </div>
+
+                <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                    Company Address
+                </h6>
+                <div formGroupName="address">
+                    <div class="flex flex-wrap">
+                        <div class="w-full lg:w-12/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="city">
+                                    City
+                                </label>
+                                <input type="text" formControlName="city"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="state">
+                                    State
+                                </label>
+                                <input type="text" formControlName="state"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                            </div>
+                        </div>
+                        <div class="w-full lg:w-6/12 px-4">
+                            <div class="relative w-full mb-3">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="zip">
+                                    Zip Code
+                                </label>
+                                <input type="text" formControlName="zip"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                <div class="flex flex-wrap">
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="longitude">
+                            Longitude
+                        </label>
+                        <input type="number" readonly disabled:true formControlName="longitude"
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                    </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="latitude">
+                            Latitude
+                        </label>
+                        <input type="number" readonly disabled:true formControlName="latitude"
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                    </div>
+                </div>
+                </div>
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="relative w-full mb-3 cursor-pointer" (click)="mapState()">
+                        <label class="block text-decoration-line: underline color: rgb(29 78 216) text-xs mb-2" for="phone">
+                            Choose location from map
+                        </label>
+                    </div>
+                </div>
+                <app-leaflet *ngIf="showMap"></app-leaflet>
+                <hr class="mt-6 border-b-1 border-blueGray-300">
+
+                <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                    Contact Information
+                </h6>
+                <div class="flex flex-wrap">
+                    <div class="w-full lg:w-12/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="phone">
+                                Phone
+                            </label>
+                            <input type="text" formControlName="phone"
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-12/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="email">
+                                Email
+                            </label>
+                            <input type="email" formControlName="email"
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-12/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="website">
+                                Website
+                            </label>
+                            <input type="text" formControlName='website'
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-12/12 px-4">
+                        <div class="relative w-full mb-3">
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" for="description">
+                                Company Description
+                            </label>
+                            <textarea type="text" formControlName="description"
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                rows="4"></textarea>
+                        </div>
+                    </div>
+                    </div>
+                    <app-loader [showLoader]="loading"></app-loader>
+                    <div class="flex justify-end">
+                        <button *ngIf="!loading" type="button" (click)="goBack()"
+                        class="w-40 mx-40 mb-5 mr-2 text-white bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Cancel</button>
+                    <button *ngIf="!loading" type="submit" [disabled]="!companyForm.valid" [ngClass]="companyForm.valid ? 'bg-blue-700 hover:bg-blue-800' : 'bg-blue-400 hover:bg-blue-400 cursor-not-allowed'" 
+                        class="w-40 mx-40 mb-5 text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Add Company</button>
+                    </div>
+            </form>
+        </div>
+        </div>
+</div>
